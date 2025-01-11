@@ -205,4 +205,5 @@ def get_resume():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=False)  # Disable debug for production
+    port = int(os.getenv('PORT', 5000))
+    app.run(host='0.0.0.0', port=port)
