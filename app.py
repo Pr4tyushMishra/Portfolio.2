@@ -5,8 +5,8 @@ import json
 from datetime import datetime
 import traceback
 from dotenv import load_dotenv
-from werkzeug.utils import secure_filename
 from werkzeug.urls import url_quote
+from werkzeug.utils import secure_filename
 
 # Load environment variables
 load_dotenv()
@@ -116,7 +116,7 @@ def upload_image():
             return jsonify({
                 "status": "success",
                 "filename": filename,
-                "url": f"/uploads/{filename}"
+                "url": f"/uploads/{url_quote(filename)}"
             })
         
         return jsonify({"status": "error", "message": "File type not allowed"}), 400
