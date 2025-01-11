@@ -6,7 +6,6 @@ from datetime import datetime
 import traceback
 from dotenv import load_dotenv
 from urllib.parse import quote as url_quote
-from werkzeug.urls import url_quote
 from werkzeug.utils import secure_filename
 
 # Load environment variables
