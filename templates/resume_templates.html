@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.AI - Resume Templates</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .template-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <div class="min-h-screen">
+        <!-- Header with Gradient -->
+        <header class="gradient-bg text-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold">Choose Your Resume Template</h1>
+                        <p class="mt-2 text-gray-100">Select a template that best represents your professional style</p>
+                    </div>
+                    <a href="/" class="bg-white text-indigo-600 px-6 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors duration-300">
+                        Back to Home
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Template Selection -->
+        <main class="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Professional Template -->
+                <div class="template-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="{{ url_for('static', filename='images/resume/professional.png') }}" alt="Professional Template" class="w-full h-48 object-cover bg-gray-100" onerror="this.onerror=null; this.classList.add('bg-gray-200'); this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';">
+                        <div class="absolute top-0 right-0 m-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm">
+                            Popular
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900">Professional</h3>
+                        <p class="text-gray-600 mt-2">Clean and traditional design perfect for corporate roles</p>
+                        <a href="/resume/create/professional" class="mt-4 block w-full bg-indigo-600 text-white text-center py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300">
+                            Use Template
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Creative Template -->
+                <div class="template-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="{{ url_for('static', filename='images/resume/creative.png') }}" alt="Creative Template" class="w-full h-48 object-cover bg-gray-100" onerror="this.onerror=null; this.classList.add('bg-gray-200'); this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';">
+                        <div class="absolute top-0 right-0 m-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm">
+                            Creative
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900">Creative</h3>
+                        <p class="text-gray-600 mt-2">Bold design for creative professionals and artists</p>
+                        <a href="/resume/create/creative" class="mt-4 block w-full bg-pink-600 text-white text-center py-2 px-4 rounded-lg hover:bg-pink-700 transition-colors duration-300">
+                            Use Template
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Modern Template -->
+                <div class="template-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="{{ url_for('static', filename='images/resume/modern.png') }}" alt="Modern Template" class="w-full h-48 object-cover bg-gray-100" onerror="this.onerror=null; this.classList.add('bg-gray-200'); this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';">
+                        <div class="absolute top-0 right-0 m-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm">
+                            Modern
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900">Modern</h3>
+                        <p class="text-gray-600 mt-2">Contemporary design with a minimalist approach</p>
+                        <a href="/resume/create/modern" class="mt-4 block w-full bg-green-600 text-white text-center py-2 px-4 rounded-lg hover:bg-green-700 transition-colors duration-300">
+                            Use Template
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Technical Template -->
+                <div class="template-card bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="relative">
+                        <img src="{{ url_for('static', filename='images/resume/technical.png') }}" alt="Technical Template" class="w-full h-48 object-cover bg-gray-100" onerror="this.onerror=null; this.classList.add('bg-gray-200'); this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';">
+                        <div class="absolute top-0 right-0 m-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm">
+                            Technical
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900">Technical</h3>
+                        <p class="text-gray-600 mt-2">Optimized for developers and technical roles</p>
+                        <a href="/resume/create/technical" class="mt-4 block w-full bg-purple-600 text-white text-center py-2 px-4 rounded-lg hover:bg-purple-700 transition-colors duration-300">
+                            Use Template
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Section -->
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 bg-white rounded-xl shadow-md">
+                    <div class="bg-indigo-100 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg">Drag & Drop Sections</h3>
+                    <p class="text-gray-600 mt-2">Easily reorganize your resume sections with drag and drop</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-md">
+                    <div class="bg-indigo-100 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg">Real-time Preview</h3>
+                    <p class="text-gray-600 mt-2">See changes instantly as you edit your resume</p>
+                </div>
+                <div class="text-center p-6 bg-white rounded-xl shadow-md">
+                    <div class="bg-indigo-100 rounded-full p-3 w-12 h-12 mx-auto mb-4 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                    </div>
+                    <h3 class="font-semibold text-lg">Multiple Formats</h3>
+                    <p class="text-gray-600 mt-2">Download your resume in PDF, Word, or web formats</p>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.AI - Welcome</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("wNUFawLIwKn5cwPHC");
+        })();
+    </script>
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #f0f7ff 0%, #f5f3ff 100%);
+            overflow: hidden;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg) translate(-50%, -50%); }
+            to { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+
+        .hover-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Card Styling */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.05);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+
+        .feature-card .feature-icon {
+            font-size: 3rem;
+            color: #6366f1;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .feature-card:hover .feature-title {
+            color: #6366f1;
+        }
+
+        .feature-card .feature-description {
+            color: #718096;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .feature-card .feature-link {
+            display: inline-flex;
+            align-items: center;
+            color: #6366f1;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .feature-card .feature-link:hover {
+            color: #8b5cf6;
+            transform: translateX(5px);
+        }
+
+        .feature-card .feature-link i {
+            margin-left: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card .feature-link:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Welcome Text Styling */
+        .welcome-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-size: 5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.05em;
+            text-align: center;
+            animation: fade-in-out 4s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes fade-in-out {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .welcome-subtext {
+            text-align: center;
+            color: #718096;
+            font-size: 1.25rem;
+            margin-top: 1rem;
+            animation: subtle-fade 4s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes subtle-fade {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(45deg, #f0f7ff 0%, #f5f3ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .main-content {
+            margin-left: 0;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px) scale(1.1);
+            color: #6366f1;
+        }
+
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced Social Icons */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            font-size: 2.5rem; /* Increased size */
+            color: #6366f1;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-10px) scale(1.2);
+            opacity: 1;
+            color: #8b5cf6;
+        }
+
+        /* Feedback Button Styling */
+        .feedback-btn {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+        }
+
+        .feedback-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .feedback-btn:hover::before {
+            width: 200%;
+            height: 200%;
+        }
+
+        /* Feedback Modal Styling */
+        .feedback-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .feedback-modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .feedback-modal.show .feedback-modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .feedback-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            cursor: pointer;
+            color: #718096;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            padding: 5px;
+            border-radius: 50%;
+        }
+
+        .feedback-close:hover {
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .feedback-input {
+            border: 2px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .feedback-input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            outline: none;
+        }
+
+        .feedback-submit-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .feedback-submit-btn:hover {
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="feedback-modal">
+        <div class="feedback-modal-content">
+            <span class="feedback-close" onclick="closeFeedbackModal()">&times;</span>
+            <h2 class="text-2xl font-bold mb-6 text-center gradient-text">Send Feedback</h2>
+            <div class="space-y-4">
+                <input type="text" id="feedbackName" placeholder="Your Name" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 feedback-input">
+                <input type="email" id="feedbackEmail" placeholder="Your Email" 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 feedback-input">
+                <textarea id="feedbackMessage" placeholder="Your Message" rows="4"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 feedback-input"></textarea>
+                <button onclick="submitFeedback()" 
+                    class="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition-colors feedback-submit-btn">
+                    Send Feedback
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content min-h-screen p-8 lg:p-16">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-12">
+                <h1 class="text-3xl font-bold gradient-text">Portfolio.AI</h1>
+                <button onclick="openFeedbackModal()" class="feedback-btn">Send Feedback</button>
+            </div>
+
+            <!-- Welcome Section -->
+            <div class="welcome-container">
+                <h1 class="welcome-text">WELCOME DEVS</h1>
+                <p class="welcome-subtext">Craft Your Professional Narrative with AI</p>
+            </div>
+
+            <!-- Hero Section -->
+            <div class="text-center mb-20">
+                <h1 class="text-6xl font-bold mb-8 leading-tight">
+                    Welcome to <span class="gradient-text">Portfolio.AI</span>
+                </h1>
+                <p class="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+                    Your AI-powered companion for creating stunning resumes and immersive 3D portfolios that make you stand out from the crowd
+                </p>
+            </div>
+
+            <!-- Features Section -->
+            <section class="py-16 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold gradient-text mb-4">Powerful AI-Powered Tools</h2>
+                        <p class="text-xl text-gray-600">Elevate your professional presence with intelligent design</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Portfolio Card -->
+                        <div class="feature-card">
+                            <div>
+                                <div class="feature-icon">
+                                    <i class="fas fa-cube"></i>
+                                </div>
+                                <h3 class="feature-title">3D Portfolio Generator</h3>
+                                <p class="feature-description">
+                                    Create stunning, interactive 3D portfolios that showcase your skills and projects with cutting-edge visualization.
+                                </p>
+                            </div>
+                            <a href="/portfolio/editor" class="feature-link">
+                                Start Creating
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+
+                        <!-- Resume Card -->
+                        <div class="feature-card">
+                            <div>
+                                <div class="feature-icon">
+                                    <i class="fas fa-file-alt"></i>
+                                </div>
+                                <h3 class="feature-title">AI Resume Builder</h3>
+                                <p class="feature-description">
+                                    Craft professional, ATS-friendly resumes with intelligent suggestions and modern design templates.
+                                </p>
+                            </div>
+                            <a href="/resume/templates" class="feature-link">
+                                Design Resume
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Developer Section -->
+            <div class="glass-card rounded-2xl shadow-lg p-12 mb-20">
+                <h2 class="text-4xl font-bold mb-12 text-center gradient-text">About the Developer</h2>
+                <div class="flex flex-col md:flex-row items-center space-y-8 md:space-y-0 md:space-x-12">
+                    <div class="w-56 h-56 rounded-2xl overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-all duration-300">
+                        <img src="{{ url_for('static', filename='images/developer.jpg') }}" alt="Pratyush Mishra" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://ui-avatars.com/api/?name=Pratyush+Mishra&background=6366f1&color=fff&size=200'">
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-3xl font-semibold mb-6 gradient-text">Pratyush Mishra</h3>
+                        <p class="text-gray-600 mb-8 leading-relaxed text-lg">
+                            A passionate full-stack developer and AI enthusiast dedicated to creating innovative solutions 
+                            that bridge the gap between cutting-edge technology and exceptional user experience. Portfolio.AI 
+                            represents my vision of making professional portfolio creation accessible and engaging for everyone.
+                        </p>
+                        <div class="social-icons">
+                            <div class="social-icon-container">
+                                <a href="https://github.com/Pr4tyushMishra" target="_blank" rel="noopener noreferrer" class="social-icon">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                            <div class="social-icon-container">
+                                <a href="https://www.linkedin.com/in/pratyush-mishra-dev" target="_blank" rel="noopener noreferrer" class="social-icon">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </div>
+                            <div class="social-icon-container">
+                                <a href="mailto:unknown60003@gmail.com" class="social-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center">
+                <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white py-8 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <p class="text-gray-600">&copy; 2025 Portfolio.AI. All rights reserved.</p>
+            <div class="flex space-x-4">
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Privacy Policy</a>
+                <a href="#" class="text-gray-600 hover:text-indigo-600">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        function openFeedbackModal() {
+            const modal = document.getElementById('feedbackModal');
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+        function closeFeedbackModal() {
+            const modal = document.getElementById('feedbackModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        function submitFeedback() {
+            const name = document.getElementById('feedbackName').value;
+            const email = document.getElementById('feedbackEmail').value;
+            const message = document.getElementById('feedbackMessage').value;
+
+            if (!name || !email || !message) {
+                alert('Please fill in all fields');
+                return;
+            }
+
+            const templateParams = {
+                from_name: name,
+                from_email: email,
+                message: message
+            };
+
+            emailjs.send('service_z3oq6ee', 'template_18wz6du', templateParams)
+                .then(function(response) {
+                    alert('Feedback sent successfully!');
+                    closeFeedbackModal();
+                    // Clear input fields
+                    document.getElementById('feedbackName').value = '';
+                    document.getElementById('feedbackEmail').value = '';
+                    document.getElementById('feedbackMessage').value = '';
+                }, function(error) {
+                    alert('Failed to send feedback. Please try again.');
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+[build]
+  functions = "functions"
+  publish = "public"
+
+[build.environment]
+  PYTHON_VERSION = "3.9"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

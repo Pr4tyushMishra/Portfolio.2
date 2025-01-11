@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.AI - Professional Resume Editor</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        .professional-input {
+            border-bottom: 2px solid #0d9488;
+            transition: border-color 0.3s ease;
+            background: transparent;
+        }
+        .professional-input:focus {
+            outline: none;
+            border-color: #0f766e;
+        }
+        .professional-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-left: 4px solid #0d9488;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="min-h-screen">
+        <header class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center">
+                    <h1 class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-600 to-cyan-600">Professional Resume Editor</h1>
+                    <div class="space-x-4">
+                        <button onclick="downloadResume()" class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                            Download
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Editor Section -->
+                <div class="space-y-6">
+                    <!-- Personal Information -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg professional-section">
+                        <h2 class="text-lg font-semibold mb-4 text-teal-700">Personal Information</h2>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" id="firstName" placeholder="First Name" class="professional-input w-full px-2 py-1 text-gray-700">
+                            <input type="text" id="lastName" placeholder="Last Name" class="professional-input w-full px-2 py-1 text-gray-700">
+                        </div>
+                        <input type="email" id="email" placeholder="Professional Email Address" class="professional-input w-full mt-4 px-2 py-1 text-gray-700">
+                        <input type="tel" id="phone" placeholder="Business Phone Number" class="professional-input w-full mt-4 px-2 py-1 text-gray-700">
+                        <input type="text" id="location" placeholder="City, Country" class="professional-input w-full mt-4 px-2 py-1 text-gray-700">
+                        
+                        <!-- New Corporate-Focused Fields -->
+                        <input type="text" id="linkedin" placeholder="LinkedIn Profile URL" class="professional-input w-full mt-4 px-2 py-1 text-gray-700">
+                        <input type="text" id="professionalTitle" placeholder="Professional Title / Job Role" class="professional-input w-full mt-4 px-2 py-1 text-gray-700">
+                    </div>
+
+                    <!-- Experience Section -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg professional-section">
+                        <h2 class="text-lg font-semibold mb-4 text-teal-700">Professional Experience</h2>
+                        <div id="experienceContainer">
+                            <!-- Experience entries will be dynamically added here -->
+                            <div class="experience-entry grid grid-cols-1 gap-4 mb-4">
+                                <input type="text" placeholder="Job Title" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <input type="text" placeholder="Company" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="Start Date" class="professional-input w-full px-2 py-1 text-gray-700">
+                                    <input type="text" placeholder="End Date" class="professional-input w-full px-2 py-1 text-gray-700">
+                                </div>
+                                <textarea placeholder="Key Achievements and Responsibilities" class="professional-input w-full px-2 py-1 text-gray-700 h-24"></textarea>
+                                <input type="text" placeholder="Department" class="professional-input w-full px-2 py-1 text-gray-700">
+                            </div>
+                        </div>
+                        <button onclick="addExperienceEntry()" class="mt-4 bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-700 transition-colors duration-300">
+                            Add Experience
+                        </button>
+                    </div>
+
+                    <!-- Education Section -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg professional-section">
+                        <h2 class="text-lg font-semibold mb-4 text-teal-700">Education</h2>
+                        <div id="educationContainer">
+                            <!-- Education entries will be dynamically added here -->
+                            <div class="education-entry grid grid-cols-1 gap-4 mb-4">
+                                <input type="text" placeholder="Degree" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <input type="text" placeholder="Institution" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="Graduation Year" class="professional-input w-full px-2 py-1 text-gray-700">
+                                    <input type="text" placeholder="GPA" class="professional-input w-full px-2 py-1 text-gray-700">
+                                </div>
+                                <input type="text" placeholder="Academic Honors" class="professional-input w-full px-2 py-1 text-gray-700">
+                            </div>
+                        </div>
+                        <button onclick="addEducationEntry()" class="mt-4 bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-700 transition-colors duration-300">
+                            Add Education
+                        </button>
+                    </div>
+
+                    <!-- Skills Section -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg professional-section">
+                        <h2 class="text-lg font-semibold mb-4 text-teal-700">Professional Skills</h2>
+                        <div id="skillsContainer" class="flex flex-wrap gap-2">
+                            <input type="text" id="newSkill" placeholder="Add a professional skill" class="professional-input w-full px-2 py-1 text-gray-700 mb-2">
+                            <button onclick="addSkill()" class="bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-700 transition-colors duration-300">
+                                Add Skill
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Certifications Section -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg professional-section">
+                        <h2 class="text-lg font-semibold mb-4 text-teal-700">Certifications</h2>
+                        <div id="certificationsContainer">
+                            <div class="certification-entry grid grid-cols-1 gap-4 mb-4">
+                                <input type="text" placeholder="Certification Name" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <input type="text" placeholder="Issuing Organization" class="professional-input w-full px-2 py-1 text-gray-700">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="Date Obtained" class="professional-input w-full px-2 py-1 text-gray-700">
+                                    <input type="text" placeholder="Certification ID" class="professional-input w-full px-2 py-1 text-gray-700">
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="addCertificationEntry()" class="mt-4 bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-700 transition-colors duration-300">
+                            Add Certification
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div id="resumePreview" class="bg-white p-6 rounded-lg shadow-lg">
+                    <p class="text-gray-500 text-center">Your professional resume preview will appear here</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/js/resume_editor.js"></script>
+</body>
+</html>

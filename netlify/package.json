@@ -1,0 +1,12 @@
+{
+  "name": "portfolio-ai",
+  "version": "1.0.0",
+  "description": "AI Portfolio Resume Generator",
+  "scripts": {
+    "build": "netlify-lambda build functions",
+    "start": "netlify-lambda serve functions"
+  },
+  "dependencies": {
+    "netlify-lambda": "^2.0.15"
+  }
+}

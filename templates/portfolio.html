@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.AI - Your 3D Portfolio</title>
+    <script src="https://unpkg.com/three@0.128.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #canvas-container {
+            width: 100%;
+            height: 50vh;
+        }
+        .section {
+            margin-bottom: 2rem;
+        }
+        .project-image {
+            max-width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="fixed top-0 right-0 m-4 z-50">
+        <a href="/" class="bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg hover:bg-gray-50 transition-colors duration-300 flex items-center space-x-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+            </svg>
+            <span>Back to Home</span>
+        </a>
+    </div>
+
+    <!-- 3D Canvas -->
+    <div id="canvas-container" class="w-full"></div>
+
+    <!-- Portfolio Content -->
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <!-- Header Section -->
+            <div class="section text-center">
+                <h1 class="text-4xl font-bold text-gray-800">{{ portfolio.name }}</h1>
+                <p class="text-xl text-gray-600 mt-2">{{ portfolio.position }}</p>
+            </div>
+
+            <!-- About Section -->
+            <div class="section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">About Me</h2>
+                <p class="text-gray-600">{{ portfolio.about }}</p>
+            </div>
+
+            <!-- Experience Section -->
+            <div class="section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Experience</h2>
+                {% if portfolio.experience %}
+                    {% for exp in portfolio.experience %}
+                    <div class="mb-4">
+                        <h3 class="text-xl font-medium text-gray-800">{{ exp.title }}</h3>
+                        <p class="text-gray-600">{{ exp.company }} | {{ exp.duration }}</p>
+                        <p class="text-gray-600">{{ exp.description }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Projects Section -->
+            <div class="section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Projects</h2>
+                {% if portfolio.projects %}
+                    {% for project in portfolio.projects %}
+                    <div class="mb-6">
+                        <h3 class="text-xl font-medium text-gray-800">{{ project.title }}</h3>
+                        {% if project.image %}
+                        <img src="{{ project.image }}" alt="{{ project.title }}" class="project-image my-2 rounded">
+                        {% endif %}
+                        <p class="text-gray-600">{{ project.description }}</p>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <!-- Contact Section -->
+            <div class="section">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {% if portfolio.email %}
+                    <div>
+                        <p class="font-medium text-gray-800">Email:</p>
+                        <a href="mailto:{{ portfolio.email }}" class="text-blue-600 hover:text-blue-800">{{ portfolio.email }}</a>
+                    </div>
+                    {% endif %}
+                    {% if portfolio.phone %}
+                    <div>
+                        <p class="font-medium text-gray-800">Phone:</p>
+                        <a href="tel:{{ portfolio.phone }}" class="text-blue-600 hover:text-blue-800">{{ portfolio.phone }}</a>
+                    </div>
+                    {% endif %}
+                    {% if portfolio.linkedin %}
+                    <div>
+                        <p class="font-medium text-gray-800">LinkedIn:</p>
+                        <a href="{{ portfolio.linkedin }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ portfolio.linkedin }}</a>
+                    </div>
+                    {% endif %}
+                    {% if portfolio.github %}
+                    <div>
+                        <p class="font-medium text-gray-800">GitHub:</p>
+                        <a href="{{ portfolio.github }}" target="_blank" class="text-blue-600 hover:text-blue-800">{{ portfolio.github }}</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/portfolio.js') }}"></script>
+</body>
+</html>

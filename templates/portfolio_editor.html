@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio.AI - Portfolio Editor</title>
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #d946ef);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #f0f7ff 0%, #f5f3ff 100%);
+            overflow: hidden;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg) translate(-50%, -50%); }
+            to { transform: rotate(360deg) translate(-50%, -50%); }
+        }
+
+        .input-style {
+            transition: all 0.3s ease;
+            border: 2px solid rgba(99, 102, 241, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(99, 102, 241, 0.05);
+            font-size: 1rem;
+            letter-spacing: 0.025em;
+        }
+
+        .input-style:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-style:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+            outline: none;
+        }
+
+        .input-style::placeholder {
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        /* Input group styling */
+        .input-group {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group .input-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6366f1;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .input-group .input-style {
+            padding-left: 3rem;
+        }
+
+        .input-group .input-style:focus + .input-icon {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Textarea specific styling */
+        textarea.input-style {
+            min-height: 120px;
+            line-height: 1.6;
+            resize: vertical;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        /* Select styling */
+        select.input-style {
+            background-image: linear-gradient(45deg, transparent 50%, #6366f1 50%),
+                            linear-gradient(135deg, #6366f1 50%, transparent 50%);
+            background-position: calc(100% - 20px) calc(1em + 2px),
+                               calc(100% - 15px) calc(1em + 2px);
+            background-size: 5px 5px,
+                           5px 5px;
+            background-repeat: no-repeat;
+            padding-right: 3rem;
+        }
+
+        select.input-style:focus {
+            background-image: linear-gradient(45deg, #6366f1 50%, transparent 50%),
+                            linear-gradient(135deg, transparent 50%, #6366f1 50%);
+        }
+
+        /* File input styling */
+        .file-input-wrapper {
+            position: relative;
+            width: 100%;
+            height: 3rem;
+            background: rgba(99, 102, 241, 0.05);
+            border: 2px dashed rgba(99, 102, 241, 0.3);
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .file-input-wrapper:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.5);
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-input-wrapper .file-input-text {
+            color: #6366f1;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .file-input-wrapper:hover .file-input-text {
+            transform: scale(1.02);
+        }
+
+        /* Skill input styling */
+        .skill-tag {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #6366f1;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(99, 102, 241, 0.05);
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(139, 92, 246, 0.15));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(99, 102, 241, 0.1);
+        }
+
+        .skill-tag .remove-skill {
+            color: #6366f1;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover .remove-skill {
+            opacity: 1;
+        }
+
+        /* Project card styling */
+        .project-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.9));
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(99, 102, 241, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white bg-opacity-90 backdrop-blur-lg shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-8">
+                    <a href="/" class="text-2xl font-bold gradient-text">Portfolio.AI</a>
+                    <div class="hidden md:flex space-x-4 items-center">
+                        <span class="text-gray-500">|</span>
+                        <span class="text-gray-600">Portfolio Editor</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/portfolio/view" class="flex items-center space-x-2 text-gray-600 hover:text-indigo-600 transition-colors duration-300">
+                        <i class="fas fa-eye"></i>
+                        <span class="hidden md:inline">Preview</span>
+                    </a>
+                    <button id="savePortfolio" class="btn-primary px-6 py-2 gradient-bg text-white rounded-lg shadow-md hover:shadow-lg">
+                        <i class="fas fa-save mr-2"></i>
+                        <span class="hidden md:inline">Save</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            <form id="portfolio-form" class="space-y-8">
+                <!-- Personal Information -->
+                <div class="glass-card rounded-xl p-8 shadow-lg">
+                    <h2 class="section-header text-2xl font-semibold mb-8 gradient-text">Personal Information</h2>
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <div class="input-group">
+                                <input type="text" id="name" name="name" required 
+                                       class="input-style w-full px-6 py-4 rounded-lg"
+                                       placeholder="John Doe">
+                                <i class="fas fa-user input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="input-group">
+                                <input type="text" id="title" name="title" required 
+                                       class="input-style w-full px-6 py-4 rounded-lg"
+                                       placeholder="Full Stack Developer">
+                                <i class="fas fa-briefcase input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="input-group">
+                                <textarea id="bio" name="bio" rows="4" required 
+                                        class="input-style w-full px-6 py-4 rounded-lg resize-none"
+                                        placeholder="Tell us about yourself..."></textarea>
+                                <i class="fas fa-pen input-icon" style="top: 2rem"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="glass-card rounded-xl p-8 shadow-lg">
+                    <h2 class="section-header text-2xl font-semibold mb-8 gradient-text">Skills</h2>
+                    <div id="skills-container" class="flex flex-wrap gap-3 mb-4">
+                        <!-- Skills will be added here -->
+                    </div>
+                    <button type="button" id="add-skill" 
+                            class="inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+                        <i class="fas fa-plus mr-2"></i>Add Skill
+                    </button>
+                </div>
+
+                <!-- Projects -->
+                <div class="glass-card rounded-xl p-8 shadow-lg">
+                    <h2 class="section-header text-2xl font-semibold mb-8 gradient-text">Projects</h2>
+                    <div id="projects-container" class="space-y-6">
+                        <!-- Projects will be added here -->
+                    </div>
+                    <button type="button" id="add-project" 
+                            class="mt-6 inline-flex items-center text-indigo-600 hover:text-indigo-800 transition-colors duration-300">
+                        <i class="fas fa-plus mr-2"></i>Add Project
+                    </button>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="glass-card rounded-xl p-8 shadow-lg">
+                    <h2 class="section-header text-2xl font-semibold mb-8 gradient-text">Contact Information</h2>
+                    <div class="space-y-6">
+                        <div class="relative">
+                            <div class="input-group">
+                                <input type="email" id="email" name="email" required 
+                                       class="input-style w-full px-6 py-4 rounded-lg"
+                                       placeholder="john@example.com">
+                                <i class="fas fa-envelope input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="input-group">
+                                <input type="url" id="linkedin" name="linkedin" 
+                                       class="input-style w-full px-6 py-4 rounded-lg"
+                                       placeholder="https://linkedin.com/in/johndoe">
+                                <i class="fab fa-linkedin input-icon"></i>
+                            </div>
+                        </div>
+                        <div class="relative">
+                            <div class="input-group">
+                                <input type="url" id="github" name="github" 
+                                       class="input-style w-full px-6 py-4 rounded-lg"
+                                       placeholder="https://github.com/johndoe">
+                                <i class="fab fa-github input-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Theme Selection -->
+                <div class="glass-card rounded-xl p-8 shadow-lg">
+                    <h2 class="section-header text-2xl font-semibold mb-8 gradient-text">Portfolio Theme</h2>
+                    <div class="relative">
+                        <div class="input-group">
+                            <select id="theme" name="theme" required 
+                                    class="input-style w-full px-6 py-4 rounded-lg appearance-none">
+                                <option value="modern">Modern</option>
+                                <option value="minimal">Minimal</option>
+                                <option value="creative">Creative</option>
+                                <option value="professional">Professional</option>
+                            </select>
+                            <i class="fas fa-paint-brush input-icon"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button" onclick="window.location.href='/'" 
+                            class="px-8 py-4 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors duration-300">
+                        <i class="fas fa-times mr-2"></i>Cancel
+                    </button>
+                    <button type="submit" 
+                            class="btn-primary px-10 py-4 gradient-bg text-white rounded-lg shadow-md hover:shadow-lg">
+                        <i class="fas fa-cube mr-2"></i>Generate Portfolio
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Add Skill
+        document.getElementById('add-skill').addEventListener('click', () => {
+            const container = document.getElementById('skills-container');
+            const newSkill = document.createElement('div');
+            newSkill.className = 'skill-entry flex items-center space-x-4';
+            newSkill.innerHTML = `
+                <input type="text" name="skills[]" placeholder="e.g., JavaScript" 
+                       class="input-style flex-1 px-4 py-2 rounded-lg focus:outline-none">
+                <button type="button" class="text-red-500 hover:text-red-700 transition-colors duration-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            container.appendChild(newSkill);
+
+            // Add remove functionality
+            newSkill.querySelector('button').addEventListener('click', () => {
+                newSkill.remove();
+            });
+        });
+
+        // Add Project
+        document.getElementById('add-project').addEventListener('click', () => {
+            const container = document.getElementById('projects-container');
+            const newProject = document.createElement('div');
+            newProject.className = 'project-card bg-white p-4 rounded-lg shadow';
+            newProject.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Project Title</label>
+                        <input type="text" name="projects[][title]" 
+                               class="input-style w-full px-4 py-2 rounded-lg focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea name="projects[][description]" rows="3" 
+                                  class="input-style w-full px-4 py-2 rounded-lg focus:outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Project Image</label>
+                        <input type="file" name="projects[][image]" accept="image/*" 
+                               class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" class="text-red-500 hover:text-red-700 transition-colors duration-300">
+                            <i class="fas fa-trash mr-1"></i>Remove
+                        </button>
+                    </div>
+                </div>
+            `;
+            container.appendChild(newProject);
+
+            // Add remove functionality
+            newProject.querySelector('button').addEventListener('click', () => {
+                newProject.remove();
+            });
+        });
+
+        // Form Submission
+        document.getElementById('portfolio-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Show loading state
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+            submitBtn.disabled = true;
+
+            try {
+                const formData = new FormData(e.target);
+                const response = await fetch('/api/save-portfolio', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'success') {
+                    // Show success message
+                    const toast = document.createElement('div');
+                    toast.className = 'fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300';
+                    toast.innerHTML = '<i class="fas fa-check-circle mr-2"></i>Portfolio saved successfully!';
+                    document.body.appendChild(toast);
+                    
+                    // Redirect after a short delay
+                    setTimeout(() => {
+                        window.location.href = '/portfolio/view';
+                    }, 1500);
+                } else {
+                    throw new Error(data.message || 'Failed to save portfolio');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                // Show error message
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform transition-transform duration-300';
+                toast.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i>${error.message || 'Error saving portfolio'}`;
+                document.body.appendChild(toast);
+                
+                // Remove toast after 5 seconds
+                setTimeout(() => {
+                    toast.remove();
+                }, 5000);
+            } finally {
+                // Restore button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Quick Save
+        document.getElementById('savePortfolio').addEventListener('click', () => {
+            document.getElementById('portfolio-form').dispatchEvent(new Event('submit'));
+        });
+
+        // Add initial skill and project
+        document.getElementById('add-skill').click();
+        document.getElementById('add-project').click();
+    </script>
+</body>
+</html>
