@@ -406,6 +406,154 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
+        .night-mode-btn {
+            background-color: transparent;
+            border: none;
+            color: #6366f1;
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .night-mode-btn:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        body.night-mode {
+            background-color: #121620;
+            color: #e2e8f0;
+        }
+
+        body.night-mode .animated-bg {
+            background: linear-gradient(45deg, #1a202c 0%, #2c3748 100%);
+        }
+
+        body.night-mode .main-content {
+            background-color: transparent;
+        }
+
+        body.night-mode .glass-card {
+            background-color: rgba(45, 55, 72, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        body.night-mode .gradient-text {
+            color: #6366f1;
+        }
+
+        body.night-mode .btn-primary,
+        body.night-mode .feedback-btn,
+        body.night-mode .welcome-btn,
+        body.night-mode .portfolio-btn,
+        body.night-mode .resume-btn {
+            background-color: #6366f1;
+            color: white;
+            border: 1px solid rgba(99, 102, 241, 0.5);
+        }
+
+        body.night-mode .btn-primary:hover,
+        body.night-mode .feedback-btn:hover,
+        body.night-mode .welcome-btn:hover,
+        body.night-mode .portfolio-btn:hover,
+        body.night-mode .resume-btn:hover {
+            background-color: #5a5fe0;
+        }
+
+        body.night-mode h1,
+        body.night-mode h2,
+        body.night-mode p,
+        body.night-mode span,
+        body.night-mode label {
+            color: #e2e8f0;
+        }
+
+        body.night-mode footer {
+            background-color: #1a202c;
+            color: #718096;
+        }
+
+        body.night-mode .feature-card {
+            background: linear-gradient(135deg, rgba(45, 55, 72, 0.95), rgba(45, 55, 72, 0.9));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            color: #e2e8f0;
+        }
+
+        body.night-mode .feature-card .feature-icon {
+            color: #6366f1;
+        }
+
+        body.night-mode .welcome-container h2,
+        body.night-mode .portfolio-section h2,
+        body.night-mode .resume-section h2 {
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+        }
+
+        body.night-mode .welcome-container p,
+        body.night-mode .portfolio-section p,
+        body.night-mode .resume-section p {
+            color: #cbd5e0;
+        }
+
+        body.night-mode .section-heading {
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+        }
+
+        body.night-mode .developer-description {
+            color: #e2e8f0;
+            background-color: rgba(45, 55, 72, 0.6);
+            padding: 1rem;
+            border-radius: 0.75rem;
+        }
+
+        body.night-mode .welcome-container .welcome-text {
+            color: #ffffff;
+            font-weight: 800;
+            text-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+            letter-spacing: 1px;
+        }
+
+        body.night-mode .welcome-container .welcome-subtext {
+            color: #a0aec0;
+            font-weight: 600;
+        }
+
+        body.night-mode .welcome-container {
+            background-color: rgba(45, 55, 72, 0.5);
+            padding: 1.5rem;
+            border-radius: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body.night-mode .feature-card .feature-title {
+            color: #ffffff;
+        }
+
+        body.night-mode .feature-card .feature-description {
+            color: #cbd5e0;
+        }
+
+        body.night-mode .feature-card .feature-link {
+            color: #6366f1;
+        }
+
+        body.night-mode .text-center h1,
+        body.night-mode .text-center p {
+            color: #e2e8f0;
+        }
+
+        body.night-mode .glass-card h2 {
+            color: #ffffff;
+        }
+
+        body.night-mode .glass-card p {
+            color: #cbd5e0;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -438,7 +586,12 @@
             <!-- Header -->
             <div class="flex justify-between items-center mb-12">
                 <h1 class="text-3xl font-bold gradient-text">Portfolio.AI</h1>
-                <button onclick="openFeedbackModal()" class="feedback-btn">Send Feedback</button>
+                <div class="flex items-center space-x-4">
+                    <button id="night-mode-toggle" class="night-mode-btn">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button onclick="openFeedbackModal()" class="feedback-btn">Send Feedback</button>
+                </div>
             </div>
 
             <!-- Welcome Section -->
@@ -612,6 +765,66 @@
                     alert('Failed to send feedback. Please try again.');
                 });
         }
+
+        // Night Mode Toggle
+        const nightModeToggle = document.getElementById('night-mode-toggle');
+        const body = document.body;
+
+        function applyNightMode(isNightMode) {
+            if (isNightMode) {
+                body.classList.add('night-mode');
+                nightModeToggle.querySelector('i').classList.replace('fa-moon', 'fa-sun');
+                
+                // Additional elements to modify if needed
+                const elementsToModify = [
+                    '.welcome-btn', 
+                    '.portfolio-btn', 
+                    '.resume-btn', 
+                    '.feature-card', 
+                    '.glass-card'
+                ];
+                
+                elementsToModify.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => {
+                        el.classList.add('night-mode');
+                    });
+                });
+            } else {
+                body.classList.remove('night-mode');
+                nightModeToggle.querySelector('i').classList.replace('fa-sun', 'fa-moon');
+                
+                // Remove night mode from additional elements
+                const elementsToModify = [
+                    '.welcome-btn', 
+                    '.portfolio-btn', 
+                    '.resume-btn', 
+                    '.feature-card', 
+                    '.glass-card'
+                ];
+                
+                elementsToModify.forEach(selector => {
+                    document.querySelectorAll(selector).forEach(el => {
+                        el.classList.remove('night-mode');
+                    });
+                });
+            }
+        }
+
+        nightModeToggle.addEventListener('click', () => {
+            const isNightMode = !body.classList.contains('night-mode');
+            applyNightMode(isNightMode);
+            
+            // Save preference in localStorage
+            localStorage.setItem('night-mode', isNightMode);
+        });
+
+        // Check for saved night mode preference on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedNightMode = localStorage.getItem('night-mode') === 'true';
+            if (savedNightMode) {
+                applyNightMode(true);
+            }
+        });
     </script>
 </body>
 </html>
